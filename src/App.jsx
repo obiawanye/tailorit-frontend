@@ -1,10 +1,15 @@
+import { Routes, Route } from 'react-router'
+import SignIn from './pages/SignIn'
+import SignUp from './pages/SignUp'
+import Catalog from './pages/Catalog'
+
 function App() {
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-      <h1 className="text-5xl font-bold text-white">
-        Tailorit
-      </h1>
-    </div>
+    <Routes>
+      <Route path="/sign-in/*" element={<SignIn />} />
+      <Route path="/sign-up/*" element={<SignUp />} />
+      <Route path="/catalog" element={<Catalog />} />
+    </Routes>
   )
 }
 
