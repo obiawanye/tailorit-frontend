@@ -122,11 +122,8 @@ function SignUp() {
               </p>
 
               {/* Form */}
-              <form
-                onSubmit={handleSubmit}
-                className="mt-7 space-y-5"
-              >
-
+              <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+                
                 {/* Email */}
                 <div>
                   <label
@@ -325,10 +322,7 @@ function SignUp() {
         {/* RIGHT COLUMN */}
         <div className="hidden min-h-screen p-4 lg:block">
           <div className="h-full overflow-hidden rounded-2xl">
-            <img
-              src={authImage}
-              alt="Tailorit workspace"
-              className="h-full w-full object-cover"
+            <img src={authImage} alt="Tailorit workspace" className="h-full w-full object-cover"
             />
           </div>
         </div>
