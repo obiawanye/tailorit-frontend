@@ -24,21 +24,38 @@ function SignIn() {
     setIsLoading(true)
 
     try {
-      await signIn.create({
-        identifier: email,
-      })
-
-      await signIn.password({
+      const { error } = await signIn.password({
+        emailAddress: email,
         password,
       })
 
-      if (signIn.status === 'complete') {
-        await signIn.finalize()
+      if (error) {
+        console.error(JSON.stringify(error, null, 2))
+        return
+      }
 
-        navigate('/catalog')
+      if (signIn.status === 'complete') {
+        await signIn.finalize({
+          navigate: ({ session, decorateUrl }) => {
+            if (session?.currentTask) {
+              console.log('Session task:', session.currentTask)
+              return
+            }
+
+            const url = decorateUrl('/catalog')
+
+            if (url.startsWith('http')) {
+              window.location.href = url
+            } else {
+              navigate('/catalog')
+            }
+          },
+        })
+      } else {
+        console.log('Sign-in not complete:', signIn.status)
       }
     } catch (error) {
-      console.error(error)
+      console.error('Sign-in error:', error)
     } finally {
       setIsLoading(false)
     }
