@@ -24,6 +24,13 @@ function Welcome() {
           >
             Sign up
           </Link>
+
+          <Link
+            to="/catalog"
+            className="rounded-md px-5 py-2.5 text-sm font-medium text-black transition hover:bg-gray-100"
+          >
+            Catalog
+          </Link>
         </div>
       </nav>
 
