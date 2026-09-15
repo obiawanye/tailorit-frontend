@@ -8,20 +8,22 @@ import authImage from '../assets/AuthImage.png'
 import logo from '../assets/TailorIt_Logo.png'
 
 function SignIn() {
-  const { signIn, errors } = useSignIn()
+  const { signIn, errors, fetchStatus } = useSignIn()
   const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const [formError, setFormError] = useState('')
+
+  const isLoading = fetchStatus === 'fetching'
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    setIsLoading(true)
+    setFormError('')
 
     try {
       const { error } = await signIn.password({
@@ -30,7 +32,10 @@ function SignIn() {
       })
 
       if (error) {
-        console.error(JSON.stringify(error, null, 2))
+        console.error('Clerk sign-in error:', error)
+        setFormError(
+          error.message || 'Unable to sign in. Please check your email and password.'
+        )
         return
       }
 
@@ -47,22 +52,46 @@ function SignIn() {
             if (url.startsWith('http')) {
               window.location.href = url
             } else {
-              navigate('/catalog')
+              navigate(url)
             }
           },
         })
-      } else {
-        console.log('Sign-in not complete:', signIn.status)
+
+        return
       }
+
+      if (signIn.status === 'needs_client_trust') {
+        setFormError(
+          'This device needs to be verified before you can sign in.'
+        )
+        console.log('Sign-in requires client trust:', signIn)
+        return
+      }
+
+      if (signIn.status === 'needs_second_factor') {
+        setFormError(
+          'Additional verification is required to sign in.'
+        )
+        console.log('Sign-in requires a second factor:', signIn)
+        return
+      }
+
+      console.log('Sign-in is not complete:', signIn)
+      setFormError(
+        'Sign-in could not be completed. Please try again.'
+      )
     } catch (error) {
       console.error('Sign-in error:', error)
-    } finally {
-      setIsLoading(false)
+
+      setFormError(
+        'Something went wrong while signing in. Please try again.'
+      )
     }
   }
 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true)
+    setFormError('')
 
     try {
       await signIn.authenticateWithRedirect({
@@ -71,7 +100,12 @@ function SignIn() {
         redirectUrlComplete: '/catalog',
       })
     } catch (error) {
-      console.error(error)
+      console.error('Google sign-in error:', error)
+
+      setFormError(
+        'Unable to sign in with Google. Please try again.'
+      )
+
       setGoogleLoading(false)
     }
   }
@@ -161,7 +195,11 @@ function SignIn() {
                     <input
                       id="password"
                       name="password"
-                      type={showPassword ? 'text' : 'password'}
+                      type={
+                        showPassword
+                          ? 'text'
+                          : 'password'
+                      }
                       value={password}
                       onChange={(event) =>
                         setPassword(event.target.value)
@@ -222,13 +260,22 @@ function SignIn() {
                   </Link>
                 </div>
 
+                {/* General Error */}
+                {formError && (
+                  <p className="text-sm text-red-500">
+                    {formError}
+                  </p>
+                )}
+
                 {/* Sign In Button */}
                 <button
                   type="submit"
                   disabled={isLoading}
                   className="w-full rounded-md bg-[#ff5a00] py-3 text-sm font-medium text-white transition hover:bg-[#e94f00] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {isLoading ? 'Signing in...' : 'Sign in'}
+                  {isLoading
+                    ? 'Signing in...'
+                    : 'Sign in'}
                 </button>
               </form>
 
@@ -247,7 +294,7 @@ function SignIn() {
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                disabled={googleLoading}
+                disabled={googleLoading || isLoading}
                 className="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 py-3 text-sm font-medium text-black transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <FcGoogle size={20} />
