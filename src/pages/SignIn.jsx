@@ -94,13 +94,39 @@ function SignIn() {
     setFormError('')
 
     try {
-      await signIn.authenticateWithRedirect({
+      const { error } = await signIn.sso({
         strategy: 'oauth_google',
-        redirectUrl: '/sso-callback',
-        redirectUrlComplete: '/catalog',
+        redirectCallbackUrl: '/sso-callback',
+        redirectUrl: '/catalog',
       })
+
+      if (error) {
+        console.error(
+          'Google sign-in error:',
+          JSON.stringify(error, null, 2)
+        )
+
+        setFormError(
+          error.message || 'Unable to sign in with Google. Please try again.'
+        )
+
+        setGoogleLoading(false)
+        return
+      }
+
+      if (signIn.status === 'complete') {
+        console.log('Google sign-in complete')
+      } else {
+        console.log(
+          'Google sign-in requires additional steps:',
+          signIn.status
+        )
+      }
     } catch (error) {
-      console.error('Google sign-in error:', error)
+      console.error(
+        'Google sign-in exception:',
+        JSON.stringify(error, null, 2)
+      )
 
       setFormError(
         'Unable to sign in with Google. Please try again.'
