@@ -6,6 +6,8 @@ import SignUp from './pages/SignUp'
 import Catalog from './pages/Catalog'
 import Verify from './pages/Verify'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import SetNewPassword from './pages/SetNewPassword'
 
 function App() {
   return (
@@ -17,7 +19,8 @@ function App() {
       <Route path="/verify" element={<Verify />} />
       <Route path="/sso-callback" element={<SSOCallback />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/set-new-password" element={<SetNewPassword />} />
     </Routes>
   )
 }
