@@ -2,186 +2,156 @@ import { useRef, useState } from 'react'
 import { useSignUp } from '@clerk/react'
 import { useNavigate } from 'react-router'
 
+import AuthLayout from '../components/AuthLayout'
+
 function Verify() {
-    const { signUp } = useSignUp()
-    const navigate = useNavigate()
+  const { signUp } = useSignUp()
+  const navigate = useNavigate()
 
-    const [otp, setOtp] = useState(['', '', '', '', '', ''])
-    const [error, setError] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-    const inputRefs = useRef([])
+  const inputRefs = useRef([])
 
-    const handleChange = (index, value) => {
-        const digit = value.replace(/\D/g, '').slice(-1)
+  const handleChange = (index, value) => {
+    const digit = value.replace(/\D/g, '').slice(-1)
 
-        const newOtp = [...otp]
-        newOtp[index] = digit
-        setOtp(newOtp)
+    const newOtp = [...otp]
+    newOtp[index] = digit
+    setOtp(newOtp)
 
-        if (digit && index < 5) {
-            inputRefs.current[index + 1]?.focus()
-        }
-
-        setError('')
+    if (digit && index < 5) {
+      inputRefs.current[index + 1]?.focus()
     }
 
-    const handleKeyDown = (index, event) => {
-        if (
-            event.key === 'Backspace' &&
-            !otp[index] &&
-            index > 0
-        ) {
-            inputRefs.current[index - 1]?.focus()
-        }
+    setError('')
+  }
+
+  const handleKeyDown = (index, event) => {
+    if (event.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus()
+    }
+  }
+
+  const handlePaste = (event) => {
+    event.preventDefault()
+
+    const pastedCode = event.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
+
+    if (!pastedCode) return
+
+    const newOtp = ['', '', '', '', '', '']
+
+    pastedCode.split('').forEach((digit, index) => {
+      newOtp[index] = digit
+    })
+
+    setOtp(newOtp)
+
+    const nextIndex = Math.min(pastedCode.length, 5)
+    inputRefs.current[nextIndex]?.focus()
+
+    setError('')
+  }
+
+  const handleVerify = async () => {
+    const code = otp.join('')
+
+    if (code.length !== 6) {
+      setError('Please enter the 6-digit verification code.')
+      return
     }
 
-    const handlePaste = (event) => {
-        event.preventDefault()
+    setIsLoading(true)
+    setError('')
 
-        const pastedCode = event.clipboardData
-            .getData('text')
-            .replace(/\D/g, '')
-            .slice(0, 6)
+    try {
+      const { error } = await signUp.verifications.verifyEmailCode({
+        code,
+      })
 
-        if (!pastedCode) return
+      if (error) {
+        setError(error.message)
+        return
+      }
 
-        const newOtp = ['', '', '', '', '', '']
-
-        pastedCode.split('').forEach((digit, index) => {
-            newOtp[index] = digit
-        })
-
-        setOtp(newOtp)
-
-        const nextIndex = Math.min(pastedCode.length, 5)
-        inputRefs.current[nextIndex]?.focus()
-
-        setError('')
+      if (signUp.status === 'complete') {
+        await signUp.finalize()
+        navigate('/catalog')
+      } else {
+        setError('Verification succeeded, but your account still requires additional information.')
+      }
+    } catch {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
     }
+  }
 
-    const handleVerify = async () => {
-        const code = otp.join('')
+  return (
+    <AuthLayout>
+      <div className="w-full text-white">
 
-        if (code.length !== 6) {
-            setError('Please enter the 6-digit verification code.')
-            return
-        }
+        {/* Heading */}
+        <div>
+          <h1 className="font-serif text-[32px] font-medium leading-[1.05] tracking-[-0.02em] sm:text-[36px]">
+            Check Your Email
+          </h1>
 
-        setIsLoading(true)
-        setError('')
-
-        try {
-            const { error } = await signUp.verifications.verifyEmailCode({
-                code,
-            })
-
-            if (error) {
-                setError(error.message)
-                return
-            }
-
-            if (signUp.status === 'complete') {
-                await signUp.finalize()
-
-                navigate('/catalog')
-            } else {
-                setError(
-                    'Verification succeeded, but your account still requires additional information.'
-                )
-            }
-        } catch {
-            setError('Something went wrong. Please try again.')
-        } finally {
-            setIsLoading(false)
-        }
-    }
-
-    return (
-        <div className="min-h-screen bg-white px-4 py-8 sm:px-6 sm:py-12 lg:flex lg:items-center lg:justify-center lg:px-8">
-
-            {/* OTP Card */}
-            <div className="w-full max-w-[776px] rounded-[8px] border border-[#D6D6D6] bg-white">
-
-                {/* Header */}
-                <div className="p-6 sm:p-8">
-                    <h1 className="text-[22px] font-semibold text-[#1A1A1A] sm:text-[24px]">
-                        Check Your Email
-                    </h1>
-
-                    <p className="mt-2 text-[14px] leading-6 text-[#666666] sm:text-[16px]">
-                        To complete your registration, please check your email for the verification code.
-                    </p>
-                </div>
-
-                {/* OTP Inputs */}
-                <div className="px-6 pb-6 sm:px-8 sm:pb-8">
-                    <div className="flex w-full gap-2 sm:gap-4">
-
-                        {otp.map((digit, index) => (
-                            <input
-                                key={index}
-                                ref={(element) => {
-                                    inputRefs.current[index] = element
-                                }}
-                                type="text"
-                                inputMode="numeric"
-                                autoComplete="one-time-code"
-                                maxLength={1}
-                                value={digit}
-                                onChange={(event) =>
-                                    handleChange(
-                                        index,
-                                        event.target.value
-                                    )
-                                }
-                                onKeyDown={(event) =>
-                                    handleKeyDown(index, event)
-                                }
-                                onPaste={handlePaste}
-                                className="h-12 min-w-0 flex-1 rounded-md border border-gray-300 text-center text-lg outline-none focus:border-[#FF4F05] focus:ring-2 focus:ring-[#FF4F05]/20 sm:h-14"
-                            />
-                        ))}
-
-                    </div>
-
-                    {/* Error */}
-                    {error && (
-                        <p className="mt-3 text-sm text-red-500">
-                            {error}
-                        </p>
-                    )}
-                </div>
-
-                {/* Verify Button */}
-                <div className="px-6 pb-6 sm:px-8 sm:pb-8">
-                    <button
-                        type="button"
-                        onClick={handleVerify}
-                        disabled={isLoading}
-                        className="w-full rounded-md bg-[#FF4F05] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#e04400] disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                        {isLoading ? 'Verifying...' : 'Verify'}
-                    </button>
-                </div>
-
-                {/* Resend */}
-                <div className="px-6 pb-6 sm:px-8 sm:pb-8">
-                    <p className="text-center text-[14px] text-[#666666] sm:text-left sm:text-[16px]">
-                        Didn't receive the code?{' '}
-
-                        <button
-                            type="button"
-                            className="ml-1 text-[#FF4F05] hover:underline"
-                        >
-                            Resend Code
-                        </button>
-                    </p>
-                </div>
-
-            </div>
+          <p className="mt-3 text-sm leading-5 text-white/80">
+            Enter the code shared on your email
+          </p>
         </div>
-    )
+
+        {/* OTP Inputs */}
+        <div className="mt-9 flex w-full gap-2 sm:gap-3">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              ref={(element) => {
+                inputRefs.current[index] = element
+              }}
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={1}
+              value={digit}
+              onChange={(event) => handleChange(index, event.target.value)}
+              onKeyDown={(event) => handleKeyDown(index, event)}
+              onPaste={handlePaste}
+              aria-label={`Verification code digit ${index + 1}`}
+              className="h-12 min-w-0 flex-1 rounded-md border border-white/20 bg-white text-center text-lg text-black outline-none transition focus:border-[#ff5a00] focus:ring-1 focus:ring-[#ff5a00] sm:h-14"
+            />
+          ))}
+        </div>
+
+        {/* Error */}
+        {error && (
+          <p className="mt-3 text-sm text-red-400">
+            {error}
+          </p>
+        )}
+
+        {/* Verify Button */}
+        <button type="button" onClick={handleVerify} disabled={isLoading} className="mt-7 h-12 w-full rounded-md bg-[#ff5a00] text-sm font-medium text-white transition hover:bg-[#e94f00] disabled:cursor-not-allowed disabled:opacity-60">
+          {isLoading ? 'Verifying...' : 'Verify'}
+        </button>
+
+        {/* Resend */}
+        <div className="mt-6 flex items-center justify-between text-sm">
+          <span className="text-white/80">
+            Didn’t receive code?
+          </span>
+
+          <button type="button" className="text-[#ff5a00] transition hover:underline">
+            Resend
+          </button>
+        </div>
+
+      </div>
+    </AuthLayout>
+  )
 }
 
 export default Verify
