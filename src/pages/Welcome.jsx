@@ -2,25 +2,13 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import { FiSearch, FiShoppingCart, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
-import heroModels from '../src/Landing/hero-models.png'
-import laptop from '../src/Landing/laptop.png'
-import phoneCase from '../src/Landing/phone-case.png'
-import duffelBag from '../src/Landing/duffel-bag.png'
-import sneakers from '../src/Landing/sneakers.png'
-import orangeDuffel from '../src/Landing/orange-duffel.png'
-import blackShirt from '../src/Landing/black-shirt.png'
-import solarPanel from '../src/Landing/solar-panel.png'
-import orangeShoppingBag from '../src/Landing/orange-shopping-bag.png'
-import landingPattern from '../src/Landing/landing-pattern.png'
-import logo from '../assets/TailorIt_Logo.png'
-
 const products = [
   {
     id: 1,
     name: 'EASY CARE TEXTURED SHIRT',
     price: 'N800',
     oldPrice: 'N1100',
-    image: laptop,
+    image: '../assets/Landing/laptop.png',
     category: 'LAPTOPS',
   },
   {
@@ -28,7 +16,7 @@ const products = [
     name: 'ABSTRACT JACQUARD SHIRT',
     price: 'N500',
     oldPrice: 'N900',
-    image: phoneCase,
+    image: '../assets/Landing/phone-case.png',
     category: 'PHONE CASES',
   },
   {
@@ -36,7 +24,7 @@ const products = [
     name: 'EASY KNIT POLO SHIRT WITH ABSTRACT PRINT',
     price: 'N699',
     oldPrice: 'N800',
-    image: duffelBag,
+    image: '../assets/Landing/duffel-bag.png',
     category: 'BAGS',
   },
   {
@@ -44,7 +32,7 @@ const products = [
     name: 'CLASSIC SNEAKER',
     price: 'N500',
     oldPrice: 'N1200',
-    image: sneakers,
+    image: '../assets/Landing/sneakers.png',
     category: 'SHOES',
   },
   {
@@ -52,7 +40,7 @@ const products = [
     name: 'TAILORIT DUFFEL BAG',
     price: 'N500',
     oldPrice: 'N900',
-    image: orangeDuffel,
+    image: '../assets/Landing/orange-duffel.png',
     category: 'BAGS',
   },
   {
@@ -60,7 +48,7 @@ const products = [
     name: 'CREASED BLACK SHIRT',
     price: 'N500',
     oldPrice: 'N1200',
-    image: blackShirt,
+    image: '../assets/Landing/black-shirt.png',
     category: 'SHOES',
   },
 ]
@@ -139,7 +127,7 @@ const PatternBackground = ({ children, className = '' }) => (
     <div
       className="pointer-events-none absolute inset-0 opacity-[0.14]"
       style={{
-        backgroundImage: `url(${landingPattern})`,
+        backgroundImage: `url('../src/Landing/landing-pattern.png')`,
         backgroundRepeat: 'repeat',
       }}
     />
@@ -160,9 +148,7 @@ export default function Welcome() {
   return (
     <main className="min-h-dvh overflow-x-hidden bg-[#EAF3F5] text-black">
 
-      {/* =========================================
-          NAVBAR
-      ========================================== */}
+      
       <header className="fixed left-0 right-0 top-0 z-[100] border-b border-black/40 bg-[#e8ecef]">
 
         <div className="mx-auto flex h-[72px] max-w-[1180px] items-center justify-between border-x border-black/30 bg-[#e8ecef] px-5 sm:px-8">
@@ -173,7 +159,7 @@ export default function Welcome() {
             aria-label="TailorIt home"
           >
             <img
-              src={logo}
+              src='../assets/TailorIt_Logo.png'
               alt="TailorIt"
               className="h-12 w-12 object-contain"
             />
@@ -256,9 +242,7 @@ export default function Welcome() {
       </header>
 
 
-      {/* =========================================
-          HERO
-      ========================================== */}
+      
       <section className="border-b border-black/40 bg-[#e8ecef] pt-[72px]">
 
         <div className="mx-auto max-w-[1180px] border-x border-black/30 bg-[#e8ecef]">
@@ -310,7 +294,7 @@ export default function Welcome() {
             <div className="relative flex items-end justify-center self-stretch">
 
               <img
-                src={heroModels}
+                src="../assets/Landing/hero-models.png"
                 alt="TailorIt models"
                 className="w-full max-w-[660px] object-contain lg:absolute lg:bottom-0 lg:right-[-20px] lg:h-[650px] lg:w-[660px]"
               />
@@ -531,7 +515,8 @@ export default function Welcome() {
           <div className="flex justify-center">
 
             <img
-              src={solarPanel}
+              src='../src/Landing/solar-panel.png'
+
               alt="TailorIt sustainability"
               className="h-auto w-full max-w-[1000px] object-contain"
             />
@@ -556,7 +541,7 @@ export default function Welcome() {
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.14]"
               style={{
-                backgroundImage: `url(${landingPattern})`,
+                backgroundImage: `url('../src/Landing/landing-pattern.png')`,
                 backgroundRepeat: 'repeat',
               }}
             />
@@ -577,7 +562,7 @@ export default function Welcome() {
 
             {/* Shopping bag */}
             <img
-              src={orangeShoppingBag}
+              src='../src/Landing/orange-shopping-bag.png'
               alt="TailorIt shopping bag"
               className="absolute bottom-[-20px] right-[5%] z-10 hidden w-[240px] object-contain sm:block lg:w-[300px]"
             />
@@ -597,7 +582,7 @@ export default function Welcome() {
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.14]"
           style={{
-            backgroundImage: `url(${landingPattern})`,
+            backgroundImage: `url('../src/Landing/landing-pattern.png')`,
             backgroundRepeat: 'repeat',
           }}
         />

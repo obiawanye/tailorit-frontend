@@ -1,13 +1,10 @@
-import authImage from '../assets/BGAUTH.png'
-import logo from '../assets/TailorIt_Logo.png'
-
 const AuthLayout = ({ children }) => {
   return (
     <main className="relative min-h-dvh w-full overflow-x-hidden bg-black">
 
       {/* Background image */}
       <img
-        src={authImage}
+        src='../assets/BGAUTH.png'
         alt=""
         className="
           fixed
@@ -45,7 +42,7 @@ const AuthLayout = ({ children }) => {
 
           {/* TailorIt logo */}
           <img
-            src={logo}
+            src='../assets/TailorIt_Logo.png'
             alt="TailorIt"
             className="
               h-14

@@ -8,14 +8,6 @@ import {
   FiX,
 } from 'react-icons/fi'
 
-import laptop from '../assets/Landing/laptop.png'
-import phoneCase from '../assets/Landing/phone-case.png'
-import duffelBag from '../assets/Landing/duffel-bag.png'
-import sneakers from '../assets/Landing/sneakers.png'
-import orangeDuffel from '../assets/Landing/orange-duffel.png'
-import blackShirt from '../assets/Landing/black-shirt.png'
-import logo from '../assets/TailorIt_Logo.png'
-import profilePlaceholder from '../assets/profile-placeholder.jpeg'
 
 const products = [
   {
@@ -25,7 +17,7 @@ const products = [
     originalPrice: 1100,
     category: 'laptops',
     type: 'customized',
-    image: laptop,
+    image: '../assets/Landing/laptop.png',
   },
   {
     id: 2,
@@ -34,7 +26,7 @@ const products = [
     originalPrice: 1100,
     category: 'phone-cases',
     type: 'customized',
-    image: phoneCase,
+    image: '../assets/Landing/phone-case.png',
   },
   {
     id: 3,
@@ -43,7 +35,7 @@ const products = [
     originalPrice: 1100,
     category: 'bags',
     type: 'customized',
-    image: duffelBag,
+    image: '../assets/Landing/duffel-bag.png',
   },
   {
     id: 4,
@@ -52,7 +44,7 @@ const products = [
     originalPrice: 1100,
     category: 'shoes',
     type: 'customized',
-    image: sneakers,
+    image: '../assets/Landing/sneakers.png',
   },
   {
     id: 5,
@@ -61,7 +53,7 @@ const products = [
     originalPrice: 1100,
     category: 'bags',
     type: 'customized',
-    image: orangeDuffel,
+    image: '../assets/Landing/orange-duffel.png',
   },
   {
     id: 6,
@@ -70,7 +62,7 @@ const products = [
     originalPrice: 1100,
     category: 'shoes',
     type: 'customized',
-    image: blackShirt,
+    image: '../assets/Landing/black-shirt.png',
   },
 ]
 
@@ -287,7 +279,7 @@ export default function Catalog() {
             className="shrink-0"
           >
             <img
-              src={logo}
+              src='../assets/TailorIt_Logo.png'
               alt="TailorIt"
               className="h-[58px] w-[58px] object-contain sm:h-[64px] sm:w-[64px]"
             />
@@ -360,7 +352,7 @@ export default function Catalog() {
                 <img
                   src={
                     user?.imageUrl ||
-                    profilePlaceholder
+                    '../assets/profile-placeholder.jpeg'
                   }
                   alt="Profile"
                   className="h-10 w-10 rounded-full border border-[#dddddd] object-cover transition hover:opacity-80"
