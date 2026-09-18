@@ -275,7 +275,7 @@ export default function Welcome() {
               </h1>
 
               <p className="mt-7 max-w-[430px] text-sm leading-6 text-gray-600 sm:text-base">
-                Create products that reflect your style. Choose your product, tailor every detail to your preferences, and make it yours.
+                Embre Group is a dynamic and continuously growing group of companies creating a buoyant economic climate.
               </p>
 
               <Button className="mt-8">
