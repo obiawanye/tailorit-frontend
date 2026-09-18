@@ -17,7 +17,7 @@ const products = [
     originalPrice: 1100,
     category: 'laptops',
     type: 'customized',
-    image: '../assets/Landing/laptop.png',
+    image: '/assets/Landing/laptop.png',
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const products = [
     originalPrice: 1100,
     category: 'phone-cases',
     type: 'customized',
-    image: '../assets/Landing/phone-case.png',
+    image: '/assets/Landing/phone-case.png',
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const products = [
     originalPrice: 1100,
     category: 'bags',
     type: 'customized',
-    image: '../assets/Landing/duffel-bag.png',
+    image: '/assets/Landing/duffel-bag.png',
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const products = [
     originalPrice: 1100,
     category: 'shoes',
     type: 'customized',
-    image: '../assets/Landing/sneakers.png',
+    image: '/assets/Landing/sneakers.png',
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const products = [
     originalPrice: 1100,
     category: 'bags',
     type: 'customized',
-    image: '../assets/Landing/orange-duffel.png',
+    image: '/assets/Landing/orange-duffel.png',
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ const products = [
     originalPrice: 1100,
     category: 'shoes',
     type: 'customized',
-    image: '../assets/Landing/black-shirt.png',
+    image: '/assets/Landing/black-shirt.png',
   },
 ]
 
@@ -279,7 +279,7 @@ export default function Catalog() {
             className="shrink-0"
           >
             <img
-              src='../assets/TailorIt_Logo.png'
+              src='/assets/TailorIt_Logo.png'
               alt="TailorIt"
               className="h-[58px] w-[58px] object-contain sm:h-[64px] sm:w-[64px]"
             />
@@ -352,7 +352,7 @@ export default function Catalog() {
                 <img
                   src={
                     user?.imageUrl ||
-                    '../assets/profile-placeholder.jpeg'
+                    '/assets/profile-placeholder.jpeg'
                   }
                   alt="Profile"
                   className="h-10 w-10 rounded-full border border-[#dddddd] object-cover transition hover:opacity-80"

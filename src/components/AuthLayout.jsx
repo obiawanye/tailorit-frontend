@@ -4,7 +4,7 @@ const AuthLayout = ({ children }) => {
 
       {/* Background image */}
       <img
-        src='../assets/BGAUTH.png'
+        src='/assets/BGAUTH.png'
         alt=""
         className="
           fixed
@@ -42,7 +42,7 @@ const AuthLayout = ({ children }) => {
 
           {/* TailorIt logo */}
           <img
-            src='../assets/TailorIt_Logo.png'
+            src='/assets/TailorIt_Logo.png'
             alt="TailorIt"
             className="
               h-14

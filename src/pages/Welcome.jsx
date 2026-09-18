@@ -8,7 +8,7 @@ const products = [
     name: 'EASY CARE TEXTURED SHIRT',
     price: 'N800',
     oldPrice: 'N1100',
-    image: '../assets/Landing/laptop.png',
+    image: '/assets/Landing/laptop.png',
     category: 'LAPTOPS',
   },
   {
@@ -16,7 +16,7 @@ const products = [
     name: 'ABSTRACT JACQUARD SHIRT',
     price: 'N500',
     oldPrice: 'N900',
-    image: '../assets/Landing/phone-case.png',
+    image: '/assets/Landing/phone-case.png',
     category: 'PHONE CASES',
   },
   {
@@ -24,7 +24,7 @@ const products = [
     name: 'EASY KNIT POLO SHIRT WITH ABSTRACT PRINT',
     price: 'N699',
     oldPrice: 'N800',
-    image: '../assets/Landing/duffel-bag.png',
+    image: '/assets/Landing/duffel-bag.png',
     category: 'BAGS',
   },
   {
@@ -32,7 +32,7 @@ const products = [
     name: 'CLASSIC SNEAKER',
     price: 'N500',
     oldPrice: 'N1200',
-    image: '../assets/Landing/sneakers.png',
+    image: '/assets/Landing/sneakers.png',
     category: 'SHOES',
   },
   {
@@ -40,7 +40,7 @@ const products = [
     name: 'TAILORIT DUFFEL BAG',
     price: 'N500',
     oldPrice: 'N900',
-    image: '../assets/Landing/orange-duffel.png',
+    image: '/assets/Landing/orange-duffel.png',
     category: 'BAGS',
   },
   {
@@ -48,7 +48,7 @@ const products = [
     name: 'CREASED BLACK SHIRT',
     price: 'N500',
     oldPrice: 'N1200',
-    image: '../assets/Landing/black-shirt.png',
+    image: '/assets/Landing/black-shirt.png',
     category: 'SHOES',
   },
 ]
@@ -127,7 +127,7 @@ const PatternBackground = ({ children, className = '' }) => (
     <div
       className="pointer-events-none absolute inset-0 opacity-[0.14]"
       style={{
-        backgroundImage: `url('../src/Landing/landing-pattern.png')`,
+        backgroundImage: `url('/assets/Landing/landing-pattern.png')`,
         backgroundRepeat: 'repeat',
       }}
     />
@@ -159,7 +159,7 @@ export default function Welcome() {
             aria-label="TailorIt home"
           >
             <img
-              src='../assets/TailorIt_Logo.png'
+              src='/assets/TailorIt_Logo.png'
               alt="TailorIt"
               className="h-12 w-12 object-contain"
             />
@@ -294,7 +294,7 @@ export default function Welcome() {
             <div className="relative flex items-end justify-center self-stretch">
 
               <img
-                src="../assets/Landing/hero-models.png"
+                src="/assets/Landing/hero-models.png"
                 alt="TailorIt models"
                 className="w-full max-w-[660px] object-contain lg:absolute lg:bottom-0 lg:right-[-20px] lg:h-[650px] lg:w-[660px]"
               />
@@ -515,7 +515,7 @@ export default function Welcome() {
           <div className="flex justify-center">
 
             <img
-              src='../src/Landing/solar-panel.png'
+              src='/assets/Landing/solar-panel.png'
 
               alt="TailorIt sustainability"
               className="h-auto w-full max-w-[1000px] object-contain"
@@ -541,7 +541,7 @@ export default function Welcome() {
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.14]"
               style={{
-                backgroundImage: `url('../src/Landing/landing-pattern.png')`,
+                backgroundImage: `url('/assets/Landing/landing-pattern.png')`,
                 backgroundRepeat: 'repeat',
               }}
             />
@@ -562,7 +562,7 @@ export default function Welcome() {
 
             {/* Shopping bag */}
             <img
-              src='../src/Landing/orange-shopping-bag.png'
+              src='/assets/Landing/orange-shopping-bag.png'
               alt="TailorIt shopping bag"
               className="absolute bottom-[-20px] right-[5%] z-10 hidden w-[240px] object-contain sm:block lg:w-[300px]"
             />
@@ -582,7 +582,7 @@ export default function Welcome() {
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.14]"
           style={{
-            backgroundImage: `url('../src/Landing/landing-pattern.png')`,
+            backgroundImage: `url('/assets/Landing/landing-pattern.png')`,
             backgroundRepeat: 'repeat',
           }}
         />
